@@ -1,31 +1,37 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>電子名信片</title>
 <style>
-  body {
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
     background: #000;
-    margin: 0;
     font-family: Arial, sans-serif;
     color: #fff;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   .postcard {
+    width: 90vw;
     max-width: 800px;
-    margin: 50px auto;
     background: #1a1a1a;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-    position: relative;
-    z-index: 1;
+    box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
     transition: opacity 1.5s ease;
   }
   .image-container {
     position: relative;
     width: 100%;
-    height: 400px;
+    aspect-ratio: 4/3;
     overflow: hidden;
   }
   .image-container img {
@@ -42,14 +48,13 @@
     animation: fadeIn 5s forwards;
     animation-delay: 2s;
   }
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
+  @keyframes fadeIn { to { opacity: 1; } }
+
   .hotspot {
     position: absolute;
-    width: 4px;
-    height: 4px;
-    background-color: transparent;
+    width: 8px;
+    height: 8px;
+    background: transparent;
     border: 2px solid #00aaff;
     border-radius: 50%;
     cursor: pointer;
@@ -58,11 +63,11 @@
   .zoom-area {
     position: absolute;
     pointer-events: none;
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     transform: translate(-50%, -50%);
     border: 3px solid #00aaff;
+    border-radius: 50%;
     overflow: hidden;
     display: none;
     z-index: 10;
@@ -75,184 +80,111 @@
   }
   .tooltip {
     position: absolute;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255,255,255,0.95);
     color: #000;
     padding: 10px;
-    border-radius: 8px;
     font-size: 14px;
+    border-radius: 8px;
     display: none;
     z-index: 20;
-    box-shadow: 0 0 10px rgba(255,255,255,0.3);
   }
-  .tooltip.show {
-    display: block;
-  }
+  .tooltip.show { display: block; }
+
   .nav-buttons {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    width: 90vw;
     max-width: 800px;
-    margin: 30px auto;
     padding: 20px;
     font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
     font-size: 20px;
     background: #2d2d2d;
     border-radius: 15px;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-    z-index: 1;
-    position: relative;
-    transition: opacity 1.5s ease;
+    box-shadow: 0 0 15px rgba(255,255,255,0.2);
   }
   .nav-buttons a {
     text-decoration: none;
     color: #ffd700;
-    padding: 10px 20px;
     border: 2px solid #ffd700;
+    padding: 10px 20px;
     border-radius: 12px;
-    transition: all 0.3s ease;
-    background: rgba(255, 215, 0, 0.1);
-    cursor: pointer;
+    background: rgba(255,215,0,0.1);
+    transition: 0.3s;
   }
   .nav-buttons a:hover {
-    background: #ffd700;
-    color: #000;
+    background: #ffd700; color: #000;
     box-shadow: 0 0 10px #ffd700;
   }
-  /* 過渡遮罩，初始是hidden */
-  .transition-cover {
-    position: fixed;
-    top: 0; left: 0;
-    pointer-events: none;
-    z-index: 1000;
-    background: #000;
-    opacity: 0;
-    transition: opacity 1.8s ease;
-  }
-  .transition-cover img {
-    position: absolute;
-    object-fit: cover;
-    will-change: transform, top, left, width, height, opacity;
-    transition:
-      transform 2s ease-in-out,
-      top 2s ease-in-out,
-      left 2s ease-in-out,
-      width 2s ease-in-out,
-      height 2s ease-in-out,
-      opacity 2s ease-in-out;
+
+  /* 手機排版優化 */
+  @media (max-width: 600px) {
+    .image-container { aspect-ratio: 3/4; }
+    .zoom-area { width: 80px; height: 80px; }
   }
 </style>
 </head>
 <body>
 
-<div class="postcard" id="main-content">
+<div class="postcard">
   <div class="image-container" id="image-container">
-    <img src="1.jpg" alt="圖片1" />
-    <img src="2.jpg" class="image2" alt="圖片2" id="image2" />
-
-    <div class="hotspot" id="hotspot1" style="top: 80px; left: 100px;"></div>
-    <div class="hotspot" id="hotspot2" style="top: 280px; left: 600px;"></div>
-
+    <img src="1.jpg" alt="圖片1">
+    <img src="2.jpg" class="image2" id="image2" alt="圖片2">
+    <div class="hotspot" id="hotspot1" style="top: 20%; left: 25%;"></div>
+    <div class="hotspot" id="hotspot2" style="top: 70%; left: 70%;"></div>
     <div class="zoom-area" id="zoom-area"><img src="2.jpg"></div>
     <div class="tooltip" id="tooltip">神龙夭矫”，这种杰出的设计继承了汉代以来的优良传统，是高水平的精神产物。</div>
   </div>
 </div>
 
-<div class="nav-buttons" id="nav-buttons">
-  <a href="#" onclick="navigate('previous.html'); return false;">← 上一頁</a>
-  <a href="#" onclick="navigate('next.html'); return false;">下一頁 →</a>
-</div>
-
-<div class="transition-cover" id="transition-cover">
-  <img src="2.jpg" id="transition-img" alt="轉場圖片" />
+<div class="nav-buttons">
+  <a href="#" onclick="alert('上一頁');">← 上一頁</a>
+  <a href="#" onclick="alert('下一頁');">下一頁 →</a>
 </div>
 
 <script>
-  const zoomArea = document.getElementById('zoom-area');
-  const zoomImg = zoomArea.querySelector('img');
-  const tooltip = document.getElementById('tooltip');
-  const container = document.getElementById('image-container');
-  const image2 = document.getElementById('image2');
-  const transitionCover = document.getElementById('transition-cover');
-  const transitionImg = document.getElementById('transition-img');
-  const mainContent = document.getElementById('main-content');
-  const navButtons = document.getElementById('nav-buttons');
+const zoomArea = document.getElementById('zoom-area');
+const zoomImg = zoomArea.querySelector('img');
+const tooltip = document.getElementById('tooltip');
+const container = document.getElementById('image-container');
+const hotspots = [
+  {element: document.getElementById('hotspot1'), x: 25, y: 20},
+  {element: document.getElementById('hotspot2'), x: 70, y: 70}
+];
 
-  // 熱區互動
-  const hotspots = [
-    {element: document.getElementById('hotspot1'), x: 100, y: 80},
-    {element: document.getElementById('hotspot2'), x: 600, y: 280}
-  ];
-
-  hotspots.forEach(hs => {
-    hs.element.addEventListener('mouseenter', e => showZoom(e, hs));
-    hs.element.addEventListener('mouseleave', hideZoom);
-    hs.element.addEventListener('touchstart', e => { e.preventDefault(); showZoom(e, hs); });
-    hs.element.addEventListener('touchend', hideZoom);
+// 處理滑鼠與觸摸互動
+hotspots.forEach(h => {
+  h.element.addEventListener('mouseenter', e => showZoom(h));
+  h.element.addEventListener('mouseleave', hideZoom);
+  h.element.addEventListener('touchstart', e => {
+    e.preventDefault();
+    showZoom(h);
   });
+  h.element.addEventListener('touchend', e => {
+    e.preventDefault();
+    hideZoom();
+  });
+});
 
-  function showZoom(event, hotspot) {
-    zoomArea.style.display = 'block';
-    tooltip.classList.add('show');
-    zoomArea.style.top = hotspot.y + 'px';
-    zoomArea.style.left = hotspot.x + 'px';
-    tooltip.style.top = (hotspot.y + 70) + 'px';
-    tooltip.style.left = (hotspot.x - 30) + 'px';
+function showZoom(h) {
+  zoomArea.style.display = 'block';
+  tooltip.classList.add('show');
 
-    const rect = container.getBoundingClientRect();
-    const offsetX = (hotspot.x / rect.width) * 100;
-    const offsetY = (hotspot.y / rect.height) * 100;
-    zoomImg.style.left = `-${offsetX}%`;
-    zoomImg.style.top = `-${offsetY}%`;
-  }
+  const rect = container.getBoundingClientRect();
+  const x = (h.x / 100) * rect.width;
+  const y = (h.y / 100) * rect.height;
 
-  function hideZoom() {
-    zoomArea.style.display = 'none';
-    tooltip.classList.remove('show');
-  }
+  zoomArea.style.top = y + 'px';
+  zoomArea.style.left = x + 'px';
+  tooltip.style.top = (y + 60) + 'px';
+  tooltip.style.left = (x - 30) + 'px';
 
-  // 主導航切換動畫
-  function navigate(url) {
-    // 先取得頁面中2.jpg的位置及大小
-    const imgRect = image2.getBoundingClientRect();
-
-    // 將過渡遮罩顯示並初始化位置大小與image2相同
-    transitionCover.style.opacity = '1';
-    transitionCover.style.pointerEvents = 'auto';
-    transitionCover.style.top = '0';
-    transitionCover.style.left = '0';
-    transitionCover.style.width = '100vw';
-    transitionCover.style.height = '100vh';
-
-    // 設定過渡圖片起始位置和大小跟頁面中圖片一樣（絕對定位）
-    transitionImg.style.top = imgRect.top + 'px';
-    transitionImg.style.left = imgRect.left + 'px';
-    transitionImg.style.width = imgRect.width + 'px';
-    transitionImg.style.height = imgRect.height + 'px';
-    transitionImg.style.opacity = '1';
-    transitionImg.style.transform = 'scale(1)';
-
-    // 隱藏主內容與導覽按鈕的透明度動畫
-    mainContent.style.transition = 'opacity 2s ease';
-    navButtons.style.transition = 'opacity 2s ease';
-    mainContent.style.opacity = '0';
-    navButtons.style.opacity = '0';
-
-    // 使用requestAnimationFrame觸發CSS transition
-    requestAnimationFrame(() => {
-      // 過渡圖片放大到全螢幕並淡出
-      transitionImg.style.top = '0';
-      transitionImg.style.left = '0';
-      transitionImg.style.width = '100vw';
-      transitionImg.style.height = '100vh';
-      transitionImg.style.transform = 'scale(1)'; // 因為已直接用width/height覆蓋大小，不用再scale
-      transitionImg.style.opacity = '0';
-    });
-
-    // 2秒後跳轉
-    setTimeout(() => {
-      window.location.href = url;
-    }, 2200);
-  }
+  zoomImg.style.left = `-${h.x}%`;
+  zoomImg.style.top = `-${h.y}%`;
+}
+function hideZoom() {
+  zoomArea.style.display = 'none';
+  tooltip.classList.remove('show');
+}
 </script>
 
 </body>
