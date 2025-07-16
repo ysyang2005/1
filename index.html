@@ -1,235 +1,135 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>可爱的归因陷阱介绍（浅色字体版）</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Open+Sans&display=swap');
-
-    body {
-      background: linear-gradient(135deg, #ffe2f0 0%, #fff0f5 100%);
-      font-family: 'Comic Neue', cursive, 'Open Sans', sans-serif;
-      margin: 0;
-      padding: 30px 15px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      color: #92577b; /* 调浅字体颜色 */
-      user-select: none;
-    }
-
-    h1 {
-      font-size: 2.4rem;
-      margin-bottom: 15px;
-      text-align: center;
-      letter-spacing: 2px;
-      text-shadow: 1px 1px 3px #d8a7c9;
-      color: #a66a99; /* 标题浅一点 */
-      user-select: text;
-    }
-
-    .cards-container {
-      display: flex;
-      flex-direction: column;
-      gap: 25px;
-      width: 350px;
-      max-width: 95vw;
-    }
-
-    .card {
-      background: #fff0fb;
-      border-radius: 24px;
-      box-shadow: 0 8px 20px rgba(255, 182, 214, 0.5);
-      padding: 25px 30px;
-      position: relative;
-      cursor: pointer;
-      transition: transform 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55), box-shadow 0.35s ease;
-      user-select: text;
-      outline: none;
-    }
-    .card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 14px 40px rgba(255, 105, 180, 0.6);
-    }
-    .card:active {
-      animation: pop 0.3s forwards;
-    }
-    @keyframes pop {
-      0% {transform: scale(1.05);}
-      50% {transform: scale(1.15);}
-      100% {transform: scale(1.05);}
-    }
-
-    .emoji-circle {
-      background: #ff9bd1;
-      color: white;
-      font-weight: 900;
-      font-size: 1.7rem;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 12px #ff6ca9;
-      margin-right: 16px;
-      flex-shrink: 0;
-      animation: bounce 2.8s ease-in-out infinite;
-      user-select: none;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-
-    .card-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 14px;
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: #a0507b; /* 卡片标题调浅 */
-      user-select: text;
-      background: linear-gradient(270deg, #a0507b, #d87aa9, #a0507b);
-      background-size: 600% 600%;
-      animation: gradientColor 8s ease infinite;
-      border-radius: 12px;
-      padding: 6px 12px;
-      box-shadow: 0 2px 10px rgba(216,122,169,0.3);
-    }
-    @keyframes gradientColor {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .description {
-      font-size: 1.05rem;
-      line-height: 1.5;
-      color: #ac799f; /* 描述调浅 */
-      margin-bottom: 12px;
-      user-select: text;
-    }
-
-    .example {
-      font-style: italic;
-      font-size: 0.92rem;
-      color: #b685ac;
-      background: #ffe6f1; /* 背景更柔和 */
-      padding: 13px 18px;
-      border-left: 6px solid #d87aa9;
-      border-radius: 14px;
-      user-select: text;
-      animation: floatText 4s ease-in-out infinite;
-    }
-    @keyframes floatText {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-    }
-
-    /* 小星星装饰 */
-    .stars {
-      position: absolute;
-      top: 12px;
-      right: 18px;
-      pointer-events: none;
-      display: flex;
-      gap: 6px;
-    }
-    .star {
-      color: #ff82be; /* 星星色调柔和 */
-      font-size: 18px;
-      animation: twinkle 2.5s infinite ease-in-out alternate;
-      user-select: none;
-    }
-    .star:nth-child(2) {
-      animation-delay: 0.7s;
-      font-size: 14px;
-      color: #ff9bd1;
-    }
-    .star:nth-child(3) {
-      animation-delay: 1.4s;
-      font-size: 16px;
-      color: #ff70ab;
-    }
-    @keyframes twinkle {
-      0% {opacity: 0.2; transform: scale(0.8);}
-      100% {opacity: 1; transform: scale(1.2);}
-    }
-    /* 星星加速闪烁，卡片hover时 */
-    .card:hover .star {
-      animation-duration: 0.8s !important;
-      transform-origin: center center;
-    }
-
-    @media (max-width: 400px) {
-      .cards-container {
-        width: 90vw;
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>手勢熄滅蠟燭</title>
+<style>
+  body {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  video {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 320px;
+    height: 240px;
+  }
+  #candle {
+    position: relative;
+    width: 120px;
+    height: 300px;
+    background: #c47b3f;
+    border-radius: 20px 20px 8px 8px;
+    box-shadow: inset 0 10px 20px #8b4d1a;
+  }
+  #flame {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 80px;
+    background: radial-gradient(circle at 50% 30%, #ffae00, #ff4500 60%, transparent 90%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: flicker 1s infinite alternate;
+    opacity: 1;
+    transition: opacity 0.8s ease;
+  }
+  @keyframes flicker {
+    0%   { transform: translateX(-50%) scale(1) rotate(0deg); opacity: 1; }
+    50%  { transform: translateX(-50%) scale(1.1) rotate(3deg); opacity: 0.9; }
+    100% { transform: translateX(-50%) scale(1) rotate(-3deg); opacity: 1; }
+  }
+</style>
 </head>
 <body>
-  <h1>🧠 社会心理学家发现了3大影响归因的“陷阱”</h1>
-  <div class="cards-container">
 
-    <div class="card" tabindex="0" aria-label="基本归因错误">
-      <div class="stars">
-        <span class="star">✨</span>
-        <span class="star">🌟</span>
-        <span class="star">✨</span>
-      </div>
-      <div class="card-header">
-        <div class="emoji-circle">1️⃣</div>
-        基本归因错误
-      </div>
-      <div class="description">
-        倾向于高估个人性格因素，低估环境情境影响。
-      </div>
-      <div class="example">
-        （比如看到别人迟到就觉得他不守时，而没考虑交通堵塞）
-      </div>
-    </div>
+<video id="video" autoplay muted></video>
 
-    <div class="card" tabindex="0" aria-label="自证预言">
-      <div class="stars">
-        <span class="star">✨</span>
-        <span class="star">🌟</span>
-        <span class="star">✨</span>
-      </div>
-      <div class="card-header">
-        <div class="emoji-circle">2️⃣</div>
-        自证预言
-      </div>
-      <div class="description">
-        我们的期待会影响现实表现，从而“验证”了自己的预期。
-      </div>
-      <div class="example">
-        （你觉得某学生不行，他也可能因为你的态度而表现差）
-      </div>
-    </div>
+<div id="candle">
+  <div id="flame"></div>
+</div>
 
-    <div class="card" tabindex="0" aria-label="自利偏差">
-      <div class="stars">
-        <span class="star">✨</span>
-        <span class="star">🌟</span>
-        <span class="star">✨</span>
-      </div>
-      <div class="card-header">
-        <div class="emoji-circle">3️⃣</div>
-        自利偏差
-      </div>
-      <div class="description">
-        成功归因于自己，失败归因于外部环境，保护自尊。
-      </div>
-      <div class="example">
-        （考试得好归功于自己，考砸了怪老师出题难）
-      </div>
-    </div>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core@4.7.0/dist/tf-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter@4.7.0/dist/tf-converter.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/handpose@0.0.7/dist/handpose.min.js"></script>
 
-  </div>
+<script>
+  const video = document.getElementById('video');
+  const flame = document.getElementById('flame');
+
+  // 蠟燭火焰的位置參考（相對於攝影機影像）
+  // 手掌靠近這區域時，就會熄滅火焰
+  // 這裡設成攝影機畫面中間偏上的位置
+  const flameArea = {
+    x: 160, // video width的一半
+    y: 60,  // 蠟燭火焰相對應區域的Y座標
+    radius: 80 // 影響範圍半徑
+  };
+
+  async function setupCamera() {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: {width: 320, height: 240},
+      audio: false
+    });
+    video.srcObject = stream;
+
+    return new Promise((resolve) => {
+      video.onloadedmetadata = () => {
+        resolve(video);
+      };
+    });
+  }
+
+  async function main() {
+    await setupCamera();
+
+    const model = await handpose.load();
+    console.log("Handpose model loaded");
+
+    // 持續偵測
+    async function detect() {
+      const predictions = await model.estimateHands(video, true);
+
+      if (predictions.length > 0) {
+        // 取第一隻手
+        const hand = predictions[0];
+        // 取手掌中心點 landmarks [0] 是手腕, [9]是手掌中間
+        const palm = hand.landmarks[9];
+
+        // 計算手掌中心與火焰區域的距離
+        const dx = palm[0] - flameArea.x;
+        const dy = palm[1] - flameArea.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+
+        // console.log("Distance:", dist);
+
+        if (dist < flameArea.radius) {
+          // 靠近火焰，火焰漸漸熄滅
+          flame.style.opacity = '0';
+        } else {
+          // 火焰恢復
+          flame.style.opacity = '1';
+        }
+      } else {
+        // 沒偵測到手，火焰保持點亮
+        flame.style.opacity = '1';
+      }
+
+      requestAnimationFrame(detect);
+    }
+
+    detect();
+  }
+
+  main();
+</script>
+
 </body>
 </html>
