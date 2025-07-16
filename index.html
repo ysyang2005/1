@@ -1,321 +1,235 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <title>電子名信片</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>可爱的归因陷阱介绍（浅色字体版）</title>
   <style>
-    html, body {
+    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Open+Sans&display=swap');
+
+    body {
+      background: linear-gradient(135deg, #ffe2f0 0%, #fff0f5 100%);
+      font-family: 'Comic Neue', cursive, 'Open Sans', sans-serif;
       margin: 0;
-      padding: 0;
-      background: black;
-      overflow: hidden;
-      color: white;
-      font-family: 'Noto Serif TC', serif;
-    }
-
-    .image-container {
-      position: relative;
-      width: 100vw;
-      height: 70vh;
-      overflow: hidden;
-    }
-
-    .image-container img {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: center;
-      transition: opacity 3s ease-in-out;
-    }
-
-    .hotspot {
-      position: absolute;
-      width: 12px;
-      height: 12px;
-      background: transparent;
-      border: 2px solid #00aaff;
-      border-radius: 50%;
-      cursor: pointer;
-      transform: translate(-50%, -50%);
-      z-index: 2;
-    }
-
-    #tooltip {
-      position: absolute;
-      background: rgba(255,255,255,0.95);
-      color: black;
-      padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      font-size: 16px;
-      display: none;
-      max-width: 300px;
-      z-index: 3;
-    }
-
-    #tooltip.show {
-      display: block;
-    }
-
-    #zoom-area {
-      position: absolute;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      overflow: hidden;
-      display: none;
-      z-index: 3;
-      border: 3px solid white;
-    }
-
-    #zoom-area img {
-      position: absolute;
-      width: 200%;
-      height: 200%;
-      transition: all 0.3s;
-    }
-
-    .bottom-bar {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 20px;
-    }
-
-    .nav-button {
-      display: inline-block;
-      margin: 0 20px;
-      padding: 10px 20px;
-      background: rgba(255,255,255,0.15);
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.3s;
-      border: 2px solid white;
-      font-weight: bold;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-    }
-
-    .nav-button:hover {
-      background: rgba(255,255,255,0.3);
-      transform: scale(1.1);
-    }
-
-    #text-box {
-      text-align: center;
-      font-size: 18px;
-      margin-top: 10px;
-      max-width: 90vw;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.6;
-    }
-
-    #transition-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: black;
-      display: none;
-      justify-content: center;
+      padding: 30px 15px;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      z-index: 10;
+      min-height: 100vh;
+      color: #92577b; /* 调浅字体颜色 */
+      user-select: none;
     }
 
-    #transition-overlay img {
-      width: 100px;
-      height: auto;
-      opacity: 0;
-      transition: transform 2s ease, opacity 2s ease;
+    h1 {
+      font-size: 2.4rem;
+      margin-bottom: 15px;
+      text-align: center;
+      letter-spacing: 2px;
+      text-shadow: 1px 1px 3px #d8a7c9;
+      color: #a66a99; /* 标题浅一点 */
+      user-select: text;
     }
 
-    /* 手機螢幕（≤ 768px） */
-    @media screen and (max-width: 768px) {
-      .hotspot {
-        width: 8px;
-        height: 8px;
-        border: 1px solid #00aaff;
-      }
-
-      #tooltip {
-        font-size: 14px;
-        max-width: 200px;
-        padding: 8px;
-      }
-
-      #zoom-area {
-        width: 80px;
-        height: 80px;
-        border: 2px solid white;
-      }
-
-      #zoom-area img {
-        width: 150%;
-        height: 150%;
-      }
-
-      .bottom-bar {
-        font-size: 16px;
-      }
-
-      .nav-button {
-        margin: 0 10px;
-        padding: 8px 15px;
-      }
-
-      #text-box {
-        font-size: 16px;
-      }
+    .cards-container {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      width: 350px;
+      max-width: 95vw;
     }
 
-    /* 平板螢幕（768px 至 1024px） */
-    @media screen and (min-width: 769px) and (max-width: 1024px) {
-      .hotspot {
-        width: 10px;
-        height: 10px;
-        border: 1.5px solid #00aaff;
-      }
+    .card {
+      background: #fff0fb;
+      border-radius: 24px;
+      box-shadow: 0 8px 20px rgba(255, 182, 214, 0.5);
+      padding: 25px 30px;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55), box-shadow 0.35s ease;
+      user-select: text;
+      outline: none;
+    }
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 14px 40px rgba(255, 105, 180, 0.6);
+    }
+    .card:active {
+      animation: pop 0.3s forwards;
+    }
+    @keyframes pop {
+      0% {transform: scale(1.05);}
+      50% {transform: scale(1.15);}
+      100% {transform: scale(1.05);}
+    }
 
-      #tooltip {
-        font-size: 15px;
-        max-width: 250px;
-        padding: 9px;
-      }
+    .emoji-circle {
+      background: #ff9bd1;
+      color: white;
+      font-weight: 900;
+      font-size: 1.7rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 12px #ff6ca9;
+      margin-right: 16px;
+      flex-shrink: 0;
+      animation: bounce 2.8s ease-in-out infinite;
+      user-select: none;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
 
-      #zoom-area {
-        width: 100px;
-        height: 100px;
-        border: 2.5px solid white;
-      }
+    .card-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 14px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #a0507b; /* 卡片标题调浅 */
+      user-select: text;
+      background: linear-gradient(270deg, #a0507b, #d87aa9, #a0507b);
+      background-size: 600% 600%;
+      animation: gradientColor 8s ease infinite;
+      border-radius: 12px;
+      padding: 6px 12px;
+      box-shadow: 0 2px 10px rgba(216,122,169,0.3);
+    }
+    @keyframes gradientColor {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-      #zoom-area img {
-        width: 180%;
-        height: 180%;
-      }
+    .description {
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: #ac799f; /* 描述调浅 */
+      margin-bottom: 12px;
+      user-select: text;
+    }
 
-      .bottom-bar {
-        font-size: 18px;
-      }
+    .example {
+      font-style: italic;
+      font-size: 0.92rem;
+      color: #b685ac;
+      background: #ffe6f1; /* 背景更柔和 */
+      padding: 13px 18px;
+      border-left: 6px solid #d87aa9;
+      border-radius: 14px;
+      user-select: text;
+      animation: floatText 4s ease-in-out infinite;
+    }
+    @keyframes floatText {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
 
-      .nav-button {
-        margin: 0 15px;
-        padding: 9px 18px;
-      }
+    /* 小星星装饰 */
+    .stars {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      pointer-events: none;
+      display: flex;
+      gap: 6px;
+    }
+    .star {
+      color: #ff82be; /* 星星色调柔和 */
+      font-size: 18px;
+      animation: twinkle 2.5s infinite ease-in-out alternate;
+      user-select: none;
+    }
+    .star:nth-child(2) {
+      animation-delay: 0.7s;
+      font-size: 14px;
+      color: #ff9bd1;
+    }
+    .star:nth-child(3) {
+      animation-delay: 1.4s;
+      font-size: 16px;
+      color: #ff70ab;
+    }
+    @keyframes twinkle {
+      0% {opacity: 0.2; transform: scale(0.8);}
+      100% {opacity: 1; transform: scale(1.2);}
+    }
+    /* 星星加速闪烁，卡片hover时 */
+    .card:hover .star {
+      animation-duration: 0.8s !important;
+      transform-origin: center center;
+    }
 
-      #text-box {
-        font-size: 17px;
+    @media (max-width: 400px) {
+      .cards-container {
+        width: 90vw;
       }
     }
   </style>
 </head>
 <body>
-  <div class="image-container" id="image-container">
-    <img src="1.jpg" id="img1" style="opacity: 1;">
-    <img src="2.jpg" id="img2" style="opacity: 0;">
-    
-    <div id="hotspot1" class="hotspot" style="top: 25%; left: 25%;"></div>
-    <div id="hotspot2" class="hotspot" style="top: 70%; left: 70%;"></div>
+  <h1>🧠 社会心理学家发现了3大影响归因的“陷阱”</h1>
+  <div class="cards-container">
 
-    <div id="zoom-area"><img src="2.jpg"></div>
-    <div id="tooltip">介紹熱區內容</div>
+    <div class="card" tabindex="0" aria-label="基本归因错误">
+      <div class="stars">
+        <span class="star">✨</span>
+        <span class="star">🌟</span>
+        <span class="star">✨</span>
+      </div>
+      <div class="card-header">
+        <div class="emoji-circle">1️⃣</div>
+        基本归因错误
+      </div>
+      <div class="description">
+        倾向于高估个人性格因素，低估环境情境影响。
+      </div>
+      <div class="example">
+        （比如看到别人迟到就觉得他不守时，而没考虑交通堵塞）
+      </div>
+    </div>
+
+    <div class="card" tabindex="0" aria-label="自证预言">
+      <div class="stars">
+        <span class="star">✨</span>
+        <span class="star">🌟</span>
+        <span class="star">✨</span>
+      </div>
+      <div class="card-header">
+        <div class="emoji-circle">2️⃣</div>
+        自证预言
+      </div>
+      <div class="description">
+        我们的期待会影响现实表现，从而“验证”了自己的预期。
+      </div>
+      <div class="example">
+        （你觉得某学生不行，他也可能因为你的态度而表现差）
+      </div>
+    </div>
+
+    <div class="card" tabindex="0" aria-label="自利偏差">
+      <div class="stars">
+        <span class="star">✨</span>
+        <span class="star">🌟</span>
+        <span class="star">✨</span>
+      </div>
+      <div class="card-header">
+        <div class="emoji-circle">3️⃣</div>
+        自利偏差
+      </div>
+      <div class="description">
+        成功归因于自己，失败归因于外部环境，保护自尊。
+      </div>
+      <div class="example">
+        （考试得好归功于自己，考砸了怪老师出题难）
+      </div>
+    </div>
+
   </div>
-
-  <div id="text-box">神龙夭矫”，這種傑出的設計繼承了漢代以來的優良傳統，是高水平的精神產物。</div>
-
-  <div class="bottom-bar">
-    <span class="nav-button" id="prev-btn">上一頁</span>
-    <span class="nav-button" id="next-btn">下一頁</span>
-  </div>
-
-  <div id="transition-overlay"><img src="2.jpg" id="transition-img"></div>
-
-  <script>
-    const img1 = document.getElementById('img1');
-    const img2 = document.getElementById('img2');
-    const transitionImg = document.getElementById('transition-img');
-    const overlay = document.getElementById('transition-overlay');
-
-    // 圖片自動淡入淡出
-    setTimeout(() => img2.style.opacity = 1, 2000);
-
-    const hotspots = [
-      {el: document.getElementById('hotspot1'), x: 25, y: 25, text: '這裡是第一個熱區介紹'},
-      {el: document.getElementById('hotspot2'), x: 70, y: 70, text: '這裡是第二個熱區介紹'}
-    ];
-
-    const tooltip = document.getElementById('tooltip');
-    const zoomArea = document.getElementById('zoom-area');
-    const zoomImg = zoomArea.querySelector('img');
-    const container = document.getElementById('image-container');
-
-    hotspots.forEach(h => {
-      h.el.addEventListener('click', e => {
-        e.stopPropagation();
-        toggleZoom(h);
-      });
-    });
-
-    document.addEventListener('click', () => {
-      hideZoom();
-    });
-
-    function toggleZoom(h) {
-      const rect = container.getBoundingClientRect();
-      const x = (h.x / 100) * rect.width;
-      const y = (h.y / 100) * rect.height;
-
-      // 根據螢幕尺寸調整提示框和放大區域的偏移
-      let tooltipOffsetY = 60;
-      let tooltipOffsetX = -30;
-      if (window.innerWidth <= 768) {
-        tooltipOffsetY = 50; // 手機上減小偏移
-        tooltipOffsetX = 0;  // 居中對齊
-      } else if (window.innerWidth <= 1024) {
-        tooltipOffsetY = 55; // 平板上適中偏移
-        tooltipOffsetX = -15;
-      }
-
-      // 確保提示框不超出螢幕邊界
-      const tooltipWidth = Math.min(window.innerWidth * 0.8, window.innerWidth <= 768 ? 200 : 250);
-      let tooltipLeft = x + tooltipOffsetX;
-      if (tooltipLeft + tooltipWidth > window.innerWidth) {
-        tooltipLeft = window.innerWidth - tooltipWidth - 10;
-      } else if (tooltipLeft < 10) {
-        tooltipLeft = 10;
-      }
-
-      zoomArea.style.display = 'block';
-      zoomArea.style.left = x + 'px';
-      zoomArea.style.top = y + 'px';
-      tooltip.innerText = h.text;
-      tooltip.style.left = tooltipLeft + 'px';
-      tooltip.style.top = (y + tooltipOffsetY) + 'px';
-      tooltip.classList.add('show');
-      zoomImg.style.left = `-${h.x}%`;
-      zoomImg.style.top = `-${h.y}%`;
-    }
-
-    function hideZoom() {
-      zoomArea.style.display = 'none';
-      tooltip.classList.remove('show');
-    }
-
-    // 頁面切換動畫
-    document.getElementById('prev-btn').addEventListener('click', () => transitionTo('prev.html'));
-    document.getElementById('next-btn').addEventListener('click', () => transitionTo('next.html'));
-
-    function transitionTo(url) {
-      overlay.style.display = 'flex';
-      setTimeout(() => {
-        transitionImg.style.transform = 'scale(15)';
-        transitionImg.style.opacity = 1;
-      }, 50);
-      setTimeout(() => {
-        overlay.style.opacity = 0;
-        window.location.href = url;
-      }, 2000);
-    }
-  </script>
 </body>
 </html>
